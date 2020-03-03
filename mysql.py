@@ -1,22 +1,55 @@
 __author__ = 'yearEamab'
 import pymysql
 import time
+import re
+import get_url_from_ajax
 
 #从数据库中拿数据
 def get_from_mysql_by_namedetail(text):
     db = pymysql.connect("127.0.0.1","wxgzh","Yeareamab6859","wxgzh")
     cursor = db.cursor()
-    sql="select url from dfydm where id=(select max(id) from dfydm where name_detail='{0}')".format(text)
+    sql="select url from dfydm where name_detail='{0}'".format(text)
     cursor.execute(sql)
     result=cursor.fetchall()
-    res_content=result[0][0]
+    res_content=''
+    if result:
+        res_content=text+'\n'
+        for x in result:
+            if re.match('.*\.mp4|.*m3u8',x[0]):
+                video_url='http://op.mtyee.com/f/dplayer.php?url='+x[0]
+                res_content=res_content+video_url+'\n\n'
+            if re.match('.*html',x[0]):
+                video_url='https://jx.yingxiangbao.cn/vip.php?url='+x[0]
+                res_content=res_content+video_url+'\n\n'
+        if res_content!='':
+            return res_content.strip()
+        else:
+            for x in result:
+                if re.match('\d+_.*',x[0]):
+                    video_url=get_url_from_ajax.get_url_noproxy(x[0])
+                    res_content=res_content+video_url+'\n\n'
+            if res_content=='':
+               res_content=res_content+result[0][0]+'\n\n'
+            return res_content.strip()
+    else:
+        sql="select distinct name_detail from dfydm where name_detail like '%{0}%'".format(text)
+        cursor.execute(sql)
+        result1=cursor.fetchall()
+        if len(result1)>100:
+            res_content='查询结果过多，请输入更详细的名字'
+            return res_content.strip()
+        elif result1:
+            for x in result1:
+                res_content=res_content+x[0]+'\n'
+            res_content=res_content+'将上面的结果发送，即可得到播放链接'+'\n'
+            return res_content.strip()
     db.close()
-    return res_content
+    return res_content.strip()
 
 def get_xinfan_from_mysql():
     db = pymysql.connect("127.0.0.1","wxgzh","Yeareamab6859","wxgzh")
     cursor = db.cursor()
-    sql="select distinct name_detail from dfydm where insert_time>=CURDATE()"
+    sql="select distinct name from dfydm where insert_time>=CURDATE()"
     cursor.execute(sql)
     result=cursor.fetchall()
     res_content=''

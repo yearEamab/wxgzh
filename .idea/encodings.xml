@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/get_url_from_ajax.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/handle_event.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/handle_text.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mysql.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/proxy_opener.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reply_news.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/reply_text.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wxgzh.py" charset="UTF-8" />
+  </component>
+</project>
