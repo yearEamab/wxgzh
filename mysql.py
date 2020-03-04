@@ -49,7 +49,7 @@ def get_from_mysql_by_namedetail(text):
 def get_xinfan_from_mysql():
     db = pymysql.connect("127.0.0.1","wxgzh","Yeareamab6859","wxgzh")
     cursor = db.cursor()
-    sql="select distinct name from dfydm where insert_time>=CURDATE()"
+    sql="select distinct name from dfydm where insert_time>=CURDATE()-3 limit 10"
     cursor.execute(sql)
     result=cursor.fetchall()
     res_content=''
@@ -90,7 +90,7 @@ def get_xingqi_from_mysql(text):
         n=list[5]
     if text=='星期日':
         n=list[6]
-    sql="select distinct name_detail from dfydm where insert_time>=date_sub(curdate(),interval {0} day) and insert_time<date_sub(curdate(),interval {1} day) limit 10".format(n,n-1)
+    sql="select distinct name from dfydm where insert_time>=date_sub(curdate(),interval {0} day) and insert_time<date_sub(curdate(),interval {1} day) limit 10".format(n,n-1)
     cursor.execute(sql)
     result=cursor.fetchall()
     res_content=''

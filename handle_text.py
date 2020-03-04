@@ -18,6 +18,12 @@ def handle(data):
     res_content=''
     if content=='新番':
         res_content=mysql.get_xinfan_from_mysql()
+        img_url='http://ae01.alicdn.com/kf/Hcf4a81a8f3174d4483e4ebfd82bb6d15M.jpg'
+        url=mysql.get_news_url_from_mysql(content)
+        reply=reply_news.make_reply(fromUser,toUser,str(int(time.time())),content,res_content,img_url,url)
+        response = make_response(reply)
+        response.headers['content-type'] = 'application/xml'
+        return response
     #如果是星期一到星期日返回图文信息
     elif re.match('^(星期一|星期二|星期三|星期四|星期五|星期六|星期日)$',content):
         #拿当天的前10条作为desc
