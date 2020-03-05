@@ -35,8 +35,13 @@ def get_from_mysql_by_namedetail(text):
         sql="select distinct name_detail from dfydm where name_detail like '%{0}%'".format(text)
         cursor.execute(sql)
         result1=cursor.fetchall()
-        if len(result1)>100:
-            res_content='查询结果过多，请输入更详细的名字或在尾部加上集数'
+        if len(result1)>50:
+            sql2="select distinct name from dfydm where name like '%{0}%'".format(text)
+            cursor.execute(sql2)
+            result2=cursor.fetchall()
+            for x in result2:
+                res_content=res_content+x[0]+'\n'
+            res_content=res_content+'查询到的结果如上,可输入更详细的名字或在尾部加上集数'
             return res_content.strip()
         elif result1:
             for x in result1:
