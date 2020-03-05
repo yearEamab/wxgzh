@@ -36,7 +36,7 @@ def get_from_mysql_by_namedetail(text):
         cursor.execute(sql)
         result1=cursor.fetchall()
         if len(result1)>100:
-            res_content='查询结果过多，请输入更详细的名字'
+            res_content='查询结果过多，请输入更详细的名字或在尾部加上集数'
             return res_content.strip()
         elif result1:
             for x in result1:
